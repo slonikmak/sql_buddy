@@ -1,13 +1,32 @@
 version: '3.8'
 
 services:
-  cbox-postgres:
-    image: postgres:16.2
-    container_name: cbox-postgres
+  app:
+    image: sql-buddy
+    container_name: sql-buddy-app
     environment:
+      - OPENAI_API_KEY=your-openai-api-key
+      - DB_HOST=db
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  db:
+    image: postgres:16.2
+    container_name: postgres-db
+    environment:
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=mysecretpassword
-    volumes:
-      - /c/development/PostgressData:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-    restart: unless-stopped
+    networks:
+      - app-network
+
+networks:
+  app-network:
+
+volumes:
+  postgres-data:

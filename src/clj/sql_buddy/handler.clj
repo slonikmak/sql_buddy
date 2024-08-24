@@ -44,10 +44,13 @@
    :headers {"Content-Type" "application/edn"}
    :body    (pr-str {:data "Received"})})
 
+(defn prepare-ai-response [response]
+  (if (string? response) (str response) (:content response)))
+
 (defn get-task-handler [request]
   (future
     (let [task (service/get-task)
-          content (:content task)]
+          content (prepare-ai-response task)]
       (websocket/broadcast-message (pr-str  {:topic "ai-result" :data content}))
       (println "Future executed successfully with content:" content)))
   {:status  200
@@ -86,7 +89,7 @@
       [["/" {:get {:handler index-handler}}]
        ["/ws" {:get websocket/websocket-handler}]
        ["/get-task" {:post {:handler get-task-handler}}]
-       ["/get-current-task" {:post {:handler get-current-task-handler}}]
+       ["/get-current-task" {:get {:handler get-current-task-handler}}]
        ["/fill-db" {:post {:handler fill-db}}]
        ["/send-user-message" {:post {:handler send-user-message-handler}}]
        ["/eval-sql" {:post {:handler eval-sql-handler}}]])

@@ -119,7 +119,7 @@
            :response-format (edn-response-format)})))
 
 (defn get-current-task []
-  (POST "/get-current-task"
+  (GET "/get-current-task"
         {:error-handler error-handler
          :handler get-current-task-handler
          :format (edn-request-format)

@@ -1,6 +1,11 @@
-# sql-buddy
+# SQL Buddy. Yor personal SQL assistant.
 
-This is the sql-buddy project.
+The AI powered SQL assistant that helps you write SQL queries faster and more efficiently.
+
+
+## Specify the OPEN-API key
+
+You should set the OPEN-API key in the system environment variable `OPENAI_API_KEY` before running the application.
 
 ## Development mode
 
@@ -49,3 +54,14 @@ and stopped by running:
 lein do clean, uberjar
 ```
 
+## Building the Docker image
+
+```
+docker build -f setup/Dockerfile -t sql-buddy .
+```
+
+### Running the Docker image
+
+```
+ docker run -p 3000:3000 -e "OPENAI_API_KEY=your-openai-api-key" sql-buddy  
+```
