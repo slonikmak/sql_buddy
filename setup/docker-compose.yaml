@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  cbox-postgres:
+    image: postgres:16.2
+    container_name: cbox-postgres
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+    volumes:
+      - /c/development/PostgressData:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
