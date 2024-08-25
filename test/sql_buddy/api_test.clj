@@ -20,7 +20,7 @@
 (deftest test-get-current-task-is-nil
   "Should check that the current task is nil when there is no task"
   (do
-    (println @ai/main-conversation)
+    ;;(println @ai/main-conversation)
     (let [response (app (mock/request :get "/get-current-task"))]
       ;;(println (pr-str response))
       (is (nil? (:data (:body response))))
@@ -62,7 +62,7 @@
                   websocket/broadcast-message (fn [data] (reset! captured-data data))]
       (let [response (app (mock/request :post "/get-task"))
             messages (:messages @ai/main-conversation)]
-        (println @ai/main-conversation)
+        ;;(println @ai/main-conversation)
         ;;(println @captured-data)
         (is (= 200 (:status response)))
         (is (= "{:data \"Received\"}" (:body response)))
