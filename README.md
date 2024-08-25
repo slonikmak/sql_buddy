@@ -95,6 +95,8 @@ docker build -f setup/Dockerfile -t sql-buddy .
 
 ## Application Usage Instructions
 
+![Local Image](img/sql-buddy.png)
+
 - To receive a new task, click on the "New Task" button.
 - The "Answer" and "Question" buttons add a prefix to the message to help the system better recognize the type of message.
 - If you want to ask the AI something, click "Question". For answering a task, use "Answer".
