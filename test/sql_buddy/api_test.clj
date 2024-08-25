@@ -49,6 +49,7 @@
             messages (:messages @ai/main-conversation)]
         ;;(println @ai/main-conversation)
         ;;(println @captured-data)
+        (println "!!!!!!" messages)
         (is (= 200 (:status response)))
         (is (= "{:data \"Received\"}" (:body response)))
         (is (some #(= {:role "user", :content ":new-task"} %) messages))
@@ -63,9 +64,9 @@
       (let [response (app (mock/request :post "/get-task"))
             messages (:messages @ai/main-conversation)]
         ;;(println @ai/main-conversation)
-        ;;(println @captured-data)
+        (println "!!!!!!" messages)
         (is (= 200 (:status response)))
         (is (= "{:data \"Received\"}" (:body response)))
-        ;;(is (some #(= {:role "user", :content ":new-task"} %) messages))
+        (is (some #(= {:role "user", :content ":new-task"} %) messages))
         (is (not (some #(= {:role "assistant", :content "The 2020 World Series was played at Globe Life Field in Arlington, Texas.", :refusal nil} %) messages)))
         (is (= (pr-str {:topic "ai-result", :data "Something went wrong"}) @captured-data))))))
