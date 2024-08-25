@@ -10,6 +10,14 @@ Currently, the project implements only the basic concept, but even in this form,
 
 The project is designed with potential for functional expansion and could evolve into a full-fledged SQL trainer.
 
+## Run application using docker-compose
+
+To run the application using docker-compose, you need to have Docker.
+Add the OPENAI_API_KEY to the `setup/docker-compose.yaml` file run it from the `setup` folder.
+
+```bash
+docker-compose up
+```
 
 ## Specify the OPEN-API key
 

@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app:
-    image: sql-buddy
+    image: antonmashkov/sql-buddy
     container_name: sql-buddy-app
     environment:
       - OPENAI_API_KEY=your-openai-api-key
