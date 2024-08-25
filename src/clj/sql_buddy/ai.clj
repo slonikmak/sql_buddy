@@ -6,10 +6,12 @@
 (defn read-resource-file [filename]
   (slurp (io/resource filename)))
 
+(def default-messages
+  {:model "gpt-3.5-turbo"
+   :messages [{:role "system" :content  (read-resource-file "main-prompt.txt")}]})
+
 (def main-conversation
-  (atom {:model "gpt-3.5-turbo"
-         :messages [{:role "system" :content  (read-resource-file "main-prompt.txt")}
-                    {:role "user" :content ":new-task"}]}))
+  (atom default-messages))
 
 (def new-task-msg {:role "user" :content ":new-task"})
 
