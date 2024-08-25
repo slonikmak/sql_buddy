@@ -16,12 +16,12 @@ jobs:
     - name: Prepare java
       uses: actions/setup-java@v3
       with:
-        java-version: '8'
+        java-version: '17'
         distribution: 'zulu'
     - name: Set up Clojure
       uses: DeLaGuardo/setup-clojure@12.5
       with:
-        lein: 2.9.1
+        lein: 2.11.2
     - name: Install dependencies
       run: lein deps
     - name: Run tests
