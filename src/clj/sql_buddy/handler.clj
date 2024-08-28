@@ -37,7 +37,7 @@
    :body    (loading-page)})
 
 (defn run-async [f]
-  (future f))
+  (future (f)))
 
 (defn fill-db [request]
   (run-async
@@ -101,3 +101,4 @@
       (reitit-ring/create-default-handler))
     {:middleware middleware}))
 
+(defn run-fn [f] (f))
