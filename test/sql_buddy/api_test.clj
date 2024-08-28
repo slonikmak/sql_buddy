@@ -20,10 +20,8 @@
 (deftest test-get-current-task-is-nil
   "Should check that the current task is nil when there is no task"
   (do
-    ;;(println @ai/main-conversation)
     (is (= @ai/main-conversation ai/default-messages))
     (let [response (app (mock/request :get "/get-current-task"))]
-      ;;(println (pr-str response))
       (is (nil? (:data (:body response))))
       (is (= 200 (:status response))))))
 
@@ -45,13 +43,10 @@
   (let [captured-data (atom nil)]
     (is (= @ai/main-conversation ai/default-messages))
     (with-redefs [api/create-chat-completion (fn [_] ai-response)
-                  future (fn [f] (f))
+                  run-async (fn [f] (f))
                   websocket/broadcast-message (fn [data] (reset! captured-data data))]
       (let [response (app (mock/request :post "/get-task"))
             messages (:messages @ai/main-conversation)]
-        ;;(println @ai/main-conversation)
-        ;;(println @captured-data)
-        (println "!!!!!!" messages)
         (is (= 200 (:status response)))
         (is (= "{:data \"Received\"}" (:body response)))
         (is (some #(= {:role "user", :content ":new-task"} %) messages))
@@ -62,12 +57,10 @@
   (let [captured-data (atom nil)]
     (is (= @ai/main-conversation ai/default-messages))
     (with-redefs [api/create-chat-completion (fn [_] (throw (Exception. "Something went wrong")))
-                  future (fn [f] (f))
+                  run-async (fn [f] (f))
                   websocket/broadcast-message (fn [data] (reset! captured-data data))]
       (let [response (app (mock/request :post "/get-task"))
             messages (:messages @ai/main-conversation)]
-        ;;(println @ai/main-conversation)
-        (println "!!!!!!" messages)
         (is (= 200 (:status response)))
         (is (= "{:data \"Received\"}" (:body response)))
         (is (some #(= {:role "user", :content ":new-task"} %) messages))

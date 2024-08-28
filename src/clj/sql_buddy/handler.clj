@@ -36,9 +36,12 @@
    :headers {"Content-Type" "text/html"}
    :body    (loading-page)})
 
+(defn run-async [f]
+  (future f))
+
 (defn fill-db [request]
-  (future
-    (let [result (service/fill-db)]
+  (run-async
+    #(let [result (service/fill-db)]
       (websocket/broadcast-message (pr-str  {:topic "sql-result" :data result}))))
   {:status  200
    :headers {"Content-Type" "application/edn"}
@@ -48,8 +51,8 @@
   (if (string? response) (str response) (:content response)))
 
 (defn get-task-handler [request]
-  (future
-    (let [task (service/get-task)
+  (run-async
+    #(let [task (service/get-task)
           content (prepare-ai-response task)]
       (websocket/broadcast-message (pr-str  {:topic "ai-result" :data content}))
       (println "Future executed successfully with content:" content)))
@@ -59,8 +62,8 @@
 
 (defn eval-sql-handler [request]
   (let [sql-script (get-in request [:params :sql-script])]
-    (future
-      (let [sql-result (service/eval-sql sql-script)]
+    (run-async
+      #(let [sql-result (service/eval-sql sql-script)]
         (websocket/broadcast-message (pr-str {:topic "sql-result" :data sql-result}))))
     {:status  200
      :headers {"Content-Type" "application/edn"}
@@ -69,8 +72,8 @@
 
 (defn send-user-message-handler [request]
   (let [user-msg (get-in request [:params :message])]
-    (future
-      (let [answer (service/send-user-message user-msg)]
+    (run-async
+      #(let [answer (service/send-user-message user-msg)]
         (websocket/broadcast-message (pr-str {:topic "ai-result" :data (:content answer)}))))
     {:status  200
      :headers {"Content-Type" "application/edn"}
