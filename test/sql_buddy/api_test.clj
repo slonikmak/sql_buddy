@@ -21,6 +21,7 @@
   "Should check that the current task is nil when there is no task"
   (do
     ;;(println @ai/main-conversation)
+    (is (= @ai/main-conversation ai/default-messages))
     (let [response (app (mock/request :get "/get-current-task"))]
       ;;(println (pr-str response))
       (is (nil? (:data (:body response))))
@@ -42,6 +43,7 @@
 
 (deftest test-get-new-task
   (let [captured-data (atom nil)]
+    (is (= @ai/main-conversation ai/default-messages))
     (with-redefs [api/create-chat-completion (fn [_] ai-response)
                   future (fn [f] (f))
                   websocket/broadcast-message (fn [data] (reset! captured-data data))]
@@ -58,6 +60,7 @@
 
 (deftest test-get-new-task-exception
   (let [captured-data (atom nil)]
+    (is (= @ai/main-conversation ai/default-messages))
     (with-redefs [api/create-chat-completion (fn [_] (throw (Exception. "Something went wrong")))
                   future (fn [f] (f))
                   websocket/broadcast-message (fn [data] (reset! captured-data data))]
