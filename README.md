@@ -120,9 +120,11 @@ docker build -f setup/Dockerfile -t sql-buddy .
 - Add the ability to select difficulty levels.
 
 ### Technical Tasks:
+- Implement syntax highlighting for SQL code.
 - Implement logging.
 - Improve error handling.
 - Increase test coverage.
+- Code refactoring for easier testing.
 - Enhance the user interface.
 - Optimize token usage.
 - Enable compatibility with different AI models, including local ones.
