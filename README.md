@@ -118,6 +118,7 @@ docker build -f setup/Dockerfile -t sql-buddy .
 - Develop a system for tracking learning progress.
 - Add the ability to select a task topic.
 - Add the ability to select difficulty levels.
+- Implement view like a python notebook.
 
 ### Technical Tasks:
 - Implement syntax highlighting for SQL code.
